@@ -44,12 +44,12 @@ class Player:
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
                 self.key_accel[0] = 0
-            #if event.key == pygame.K_a:
-                #self.key_accel[0] = 0
+            if event.key == pygame.K_a:
+                self.key_accel[0] = 0
             if event.key == pygame.K_s:
                 self.key_accel[1] = 0
-            #if event.key == pygame.K_w:
-                #self.key_accel[1] = 0
+            if event.key == pygame.K_w:
+                self.key_accel[1] = 0
 
     def pos_update(self):
         self.accel[0] = self.key_accel[0]
