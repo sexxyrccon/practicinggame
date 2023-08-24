@@ -28,7 +28,7 @@ class Object:
 
 objects = []
 objects.append(Object(0, 600, 700, 720))
-#objects.append(Object(200, 200, 300, 300))
+objects.append(Object(200, 400, 600, 500))
 
 
 class Player:
@@ -46,28 +46,32 @@ class Player:
         self.collision_accel = [0,0]
         self.color = (0,0,0)
         self.text = 0
+        self.on_ground = 0
+        self.on_wall = 0
         self.ifcollision = 0
 
     def player_move(self):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_d:
-                if self.vel[0] < Player.speed_limit:
+                if self.vel[0] < Player.speed_limit and not self.on_wall == 1:
                     self.key_accel[0] = Player.speed_limit / Player.speed_time / fps
                 else:
                     self.key_accel[0] = 0
             if event.key == pygame.K_a:
-                if self.vel[0] > Player.speed_limit * (-1):
+                if self.vel[0] > Player.speed_limit * (-1) and not self.on_wall == 2:
                     self.key_accel[0] = (-1) * Player.speed_limit / Player.speed_time / fps
                 else:
                     self.key_accel[0] = 0
+            '''
             if event.key == pygame.K_s:
                 if self.vel[1] < Player.speed_limit:
                     self.key_accel[1] = Player.speed_limit / Player.speed_time / fps
                 else:
                     self.key_accel[1] = 0
+            '''
             if event.key == pygame.K_w:
-                if self.vel[1] > Player.speed_limit * (-1):
-                    self.key_accel[1] = (-1) * Player.speed_limit / Player.speed_time / fps
+                if self.vel[1] > Player.speed_limit * (-1) and self.on_ground == 1:
+                    self.key_accel[1] = (-10) * Player.speed_limit / Player.speed_time / fps
                 else:
                     self.key_accel[1] = 0
             if event.key == pygame.K_r:
@@ -84,21 +88,9 @@ class Player:
                 self.key_accel[1] = 0
 
     def collision(self):
-        for i in objects:
-            if (self.pos[0] >= i.x1 and self.pos[0] <= i.x2) or (self.pos[0] + self.size[0] >= i.x1 and self.pos[0] + self.size[0] <= i.x2):
-                if self.pos[1] + self.size[1] + self.vel[1] / fps >= i.y1 and self.pos[1] < i.y2:
-                    self.vel[1] *= -1 * 0.1
-                    self.collision_accel[1] = Player.gravity * (-1)
-                    self.color = (0,0,255)
-                elif self.pos[1] + self.size[1] + self.vel[1] / fps >= i.y1 and self.pos[1] < i.y2:
-                    self.vel[1] *= -1 * 0.1
-                    self.color = (0,0,255)
-                else:
-                    self.collision_accel[1] = 0
-                    self.color = (0,0,0)
-            else:
-                self.collision_accel[1] = 0
-                self.color = (0,0,0)
+        pass
+
+
 
 
 
